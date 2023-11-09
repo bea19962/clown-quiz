@@ -1,0 +1,38 @@
+[
+ {
+   "id": 1,
+   "text": "What's your preferred method of communication?",
+   "answers": [
+     {
+       "text": "Talking and laughing out loud",
+       "value": {"Classical": 1, "Jester": 0, "Mime": 0, "Silly Billy": 2, "Rodeo": 1, "Auguste": 0, "Harlequin": 0}
+     },
+     {
+       "text": "Through daring feats",
+       "value": {"Classical": 0, "Jester": 1, "Mime": 0, "Silly Billy": 0, "Rodeo": 2, "Auguste": 1, "Harlequin": 0}
+     },
+     {
+       "text": "Actions speak louder than words",
+       "value": {"Classical": 0, "Jester": 0, "Mime": 2, "Silly Billy": 0, "Rodeo": 0, "Auguste": 1, "Harlequin": 1}
+     }
+   ]
+ },
+ {
+  "id": 2,
+  "text": "AAAAAAAAAAAAAA",
+  "answers": [
+    {
+      "text": "Tbbbbbbbbb",
+      "value": {"Classical": 1, "Jester": 0, "Mime": 0, "Silly Billy": 2, "Rodeo": 1, "Auguste": 0, "Harlequin": 0}
+    },
+    {
+      "text": "Throvvvvvv",
+      "value": {"Classical": 0, "Jester": 1, "Mime": 0, "Silly Billy": 0, "Rodeo": 2, "Auguste": 1, "Harlequin": 0}
+    },
+    {
+      "text": "Abbbbbbbbbbbb",
+      "value": {"Classical": 0, "Jester": 0, "Mime": 2, "Silly Billy": 0, "Rodeo": 0, "Auguste": 1, "Harlequin": 1}
+    }
+  ]
+}
+]
