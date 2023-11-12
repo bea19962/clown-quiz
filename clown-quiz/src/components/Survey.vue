@@ -1,35 +1,52 @@
 <template>
-  <div class="survey" v-if="surveyStore.currentQuestion">
+  <div class="survey" v-if="currentQuestion">
     <div :key="surveyStore.currentQuestion.id">
       {{ surveyStore.currentQuestion.id }} - {{ surveyStore.currentQuestion.question }}
-      <div v-for="answer in surveyStore.currentQuestion.answers" :key="answer.text" class="answers">
-        {{ answer.text }}
-      </div>
+      <Answers :answers="currentQuestion.answers" :questionId="currentQuestion.id"/>
     </div>
-    <button @click="surveyStore.prevQuestion" :disabled="isFirstQuestion">
-      Previous
-    </button>
-    <button @click="surveyStore.nextQuestion" :disabled="isLastQuestion">
-      Next
-    </button>
+    <button @click="prevQuestion">Previous</button>
+    <button @click="nextQuestion">Next</button>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue';
-import { useSurveyStore } from '../stores/surveyStore';
+import { onMounted } from 'vue'
+import { useSurveyStore } from '../stores/surveyStore'
+import { storeToRefs } from 'pinia'
+import { useRouter } from 'vue-router'
+import Answers from './Answers.vue';
 
-const surveyStore = useSurveyStore();
+const router = useRouter();
+
+const surveyStore = useSurveyStore()
+const { currentQuestion, isFirstQuestion, isLastQuestion } = storeToRefs(surveyStore)
+
+function prevQuestion() {
+  if (!isFirstQuestion.value) {
+    surveyStore.prevQuestion()
+  } else {
+    router.push('/')
+  }
+}
+
+function nextQuestion() {
+  if (!isLastQuestion.value) {
+    surveyStore.nextQuestion()
+  } else {
+    router.push('/result')
+  }
+}
 
 onMounted(async () => {
-  if (surveyStore.questions.length === 0) { // Only load questions if they haven't been loaded yet
+  if (surveyStore.questions.length === 0) {
+    // Only load questions if they haven't been loaded yet
     import('../questions.json')
       .then((module) => {
-        surveyStore.loadQuestions(module.default);
+        surveyStore.loadQuestions(module.default)
       })
       .catch((error) => {
-        console.error('Error importing questions.json:', error);
-      });
+        console.error('Error importing questions.json:', error)
+      })
   }
-});
+})
 </script>
