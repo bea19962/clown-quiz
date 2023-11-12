@@ -1,28 +1,32 @@
 <template>
-  <div>
-    <pre>{{ question }}</pre>
+  <div v-for="question in questions" :key="question.id" class="survey">
+    {{ question.id }} - {{ question.question }}
+    <div v-for="answer in question.answers" :key="answer.id" class="answers">
+      {{ answer.text }}
+    </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { ref, onMounted } from 'vue'
 
 export default {
   setup() {
-    const question = ref(null);
+    const questions = ref([])
 
     onMounted(async () => {
-      import('../questions.json').then((module) => {
-        question.value = module.default;
-      }).catch((error) => {
-        console.error('Error importing questions.json:', error);
-      });
-    });
+      import('../questions.json')
+        .then((module) => {
+          questions.value = module.default
+        })
+        .catch((error) => {
+          console.error('Error importing questions.json:', error)
+        })
+    })
 
     return {
-      question
-    };
+      questions
+    }
   }
 }
 </script>
-
