@@ -1,26 +1,28 @@
 <template>
   <div>
-    <Question v-if="!isSurveyComplete" :question="currentQuestion" @answerSelected="handleAnswer" />
-    <Result v-else :result="surveyResult" />
+    <pre>{{ question }}</pre>
   </div>
 </template>
 
-<script setup>
-import { computed } from 'vue'
-import { useSurveyStore } from '@/stores/surveyStore'
-import Question from './Question.vue'
-import Result from './Result.vue'
+<script>
+import { ref, onMounted } from 'vue';
 
-const surveyStore = useSurveyStore()
-const isSurveyComplete = computed(() => surveyStore.currentQuestionIndex >= questions.length)
-const currentQuestion = computed(() => questions[surveyStore.currentQuestionIndex])
+export default {
+  setup() {
+    const question = ref(null);
 
-function handleAnswer(clownType, value) {
-  surveyStore.incrementScore(clownType, value)
-  if (!isSurveyComplete.value) {
-    surveyStore.nextQuestion()
+    onMounted(async () => {
+      import('../questions.json').then((module) => {
+        question.value = module.default;
+      }).catch((error) => {
+        console.error('Error importing questions.json:', error);
+      });
+    });
+
+    return {
+      question
+    };
   }
 }
-
-const surveyResult = computed(() => surveyStore.determineClownType())
 </script>
+
