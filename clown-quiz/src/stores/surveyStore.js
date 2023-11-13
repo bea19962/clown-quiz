@@ -4,13 +4,7 @@ export const useSurveyStore = defineStore('survey', {
   state: () => ({
     questions: [],
     currentQuestionIndex: 0,
-    scores: {
-      Classical: 0,
-      Mime: 0,
-      Jester: 0,
-      SillyBilly: 0,
-      Rodeo: 0
-    }
+    scores: []
   }),
   getters: {
     currentQuestion: (state) => state.questions[state.currentQuestionIndex] || null,
@@ -37,12 +31,14 @@ export const useSurveyStore = defineStore('survey', {
       }
     },
     resetScores() {
-      this.scores = { Classical: 0, Mime: 0, Jester: 0, SillyBilly: 0, Rodeo: 0 }
+      this.scores = []
     },
-    incrementScore(clownType, value) {
-      if (this.scores.hasOwn(clownType)) {
-        this.scores[clownType] += value
-      }
+    selectAnswer(answerValue) {
+      this.scores.push(answerValue)
+      const clowns = {}
+      this.scores.forEach((x) => {
+        clowns[x] = (clowns[x] || 0) + 1
+      })
     }
   }
 })
