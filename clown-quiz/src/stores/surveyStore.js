@@ -11,16 +11,10 @@ export const useSurveyStore = defineStore('survey', {
     isFirstQuestion: (state) => state.currentQuestionIndex === 0,
     isLastQuestion: (state) => state.currentQuestionIndex === state.questions.length - 1,
     highestScoringClown: (state) => {
-      let maxScore = 0
-      let highestClown = null
-
-      for (const [clown, score] of Object.entries(state.scores)) {
-        if (score > maxScore) {
-          maxScore = score
-          highestClown = clown
-        }
-      }
-
+      const maxScore = Math.max(...Object.values(state.scores))
+      const highestClown = Object.keys(state.scores).find(
+        (clown) => state.scores[clown] === maxScore
+      )
       return highestClown
     }
   },
@@ -43,8 +37,9 @@ export const useSurveyStore = defineStore('survey', {
         this.currentQuestionIndex = index
       }
     },
-    resetScores() {
+    resetQuiz() {
       this.scores = []
+      this.currentQuestionIndex = 0 // gotta check that one
     },
     selectAnswer(answerValue) {
       if (this.scores[answerValue] == null) {

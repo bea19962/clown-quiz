@@ -17,7 +17,7 @@ const surveyStore = useSurveyStore();
 const { highestScoringClown } = storeToRefs(surveyStore);
 
 function retryQuiz() {
- surveyStore.resetScores()
+ surveyStore.resetQuiz()
   router.push('/')
 }
 </script>
