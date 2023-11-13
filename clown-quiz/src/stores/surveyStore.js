@@ -9,7 +9,20 @@ export const useSurveyStore = defineStore('survey', {
   getters: {
     currentQuestion: (state) => state.questions[state.currentQuestionIndex] || null,
     isFirstQuestion: (state) => state.currentQuestionIndex === 0,
-    isLastQuestion: (state) => state.currentQuestionIndex === state.questions.length - 1
+    isLastQuestion: (state) => state.currentQuestionIndex === state.questions.length - 1,
+    highestScoringClown: (state) => {
+      let maxScore = 0
+      let highestClown = null
+
+      for (const [clown, score] of Object.entries(state.scores)) {
+        if (score > maxScore) {
+          maxScore = score
+          highestClown = clown
+        }
+      }
+
+      return highestClown
+    }
   },
   actions: {
     loadQuestions(questionData) {
