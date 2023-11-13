@@ -4,7 +4,7 @@ export const useSurveyStore = defineStore('survey', {
   state: () => ({
     questions: [],
     currentQuestionIndex: 0,
-    scores: []
+    scores: {}
   }),
   getters: {
     currentQuestion: (state) => state.questions[state.currentQuestionIndex] || null,
@@ -34,11 +34,11 @@ export const useSurveyStore = defineStore('survey', {
       this.scores = []
     },
     selectAnswer(answerValue) {
-      this.scores.push(answerValue)
-      const clowns = {}
-      this.scores.forEach((x) => {
-        clowns[x] = (clowns[x] || 0) + 1
-      })
+      if (this.scores[answerValue] == null) {
+        this.scores[answerValue] = 0
+      }
+      this.scores[answerValue]++
+      console.log(this.scores)
     }
   }
 })
